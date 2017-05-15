@@ -92,6 +92,12 @@
                 <ui.sparql.endpoint>rdf-hx-01.ebi.ac.uk</ui.sparql.endpoint>
                 <ui.sparql.endpoint.port>1119</ui.sparql.endpoint.port>
                 <ui.sparql.endpoint.max>-1</ui.sparql.endpoint.max>
+
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</jdbc.url>
+                <jdbc.username>atlas3dev</jdbc.username>
+                <jdbc.password>atlas3dev</jdbc.password>
+                <solr.host>lime</solr.host>
             </properties>
        </profile>
 

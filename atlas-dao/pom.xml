@@ -13,7 +13,6 @@
 
     <properties>
         <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
-        <data.files.location>.</data.files.location>
 
     </properties>
 
