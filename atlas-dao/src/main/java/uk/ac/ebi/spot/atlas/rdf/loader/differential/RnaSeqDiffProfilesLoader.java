@@ -1,4 +1,4 @@
-package uk.ac.ebi.spot.atlas.rdf.loader;
+package uk.ac.ebi.spot.atlas.rdf.loader.differential;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -17,6 +18,7 @@ import java.util.HashSet;
  * @date 11/08/2014
  * Samples, Phenotypes and Ontologies Team, EMBL-EBI
  */
+@Named
 public class RnaSeqDiffProfilesLoader {
 
     private RnaSeqProfileStreamFactory diffProfileStreamFactory;
