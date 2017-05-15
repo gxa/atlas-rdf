@@ -1,39 +1,27 @@
-package uk.ac.ebi.spot.atlas.rdf.loader;
-
+package uk.ac.ebi.spot.atlas.rdf.loader.baseline;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 
 /**
- * @author Simon Jupp
- * @date 11/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
+ * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 15/05/2017.
  */
 public class BaselineProfilesLoader {
 
-    public BaselineProfileStreamFactory getBaselineExpressionsInputStreamFactory() {
-        return baselineExpressionsInputStreamFactory;
+    private final BaselineProfileStreamFactory baselineProfileStreamFactory;
+
+    public BaselineProfilesLoader(BaselineProfileStreamFactory baselineProfileStreamFactory) {
+        this.baselineProfileStreamFactory = baselineProfileStreamFactory;
     }
-
-    @Inject
-    public void setBaselineExpressionsInputStreamFactory(BaselineProfileStreamFactory baselineExpressionsInputStreamFactory) {
-        this.baselineExpressionsInputStreamFactory = baselineExpressionsInputStreamFactory;
-    }
-
-    private BaselineProfileStreamFactory baselineExpressionsInputStreamFactory;
-
 
     public BaselineProfilesList load (BaselineExperiment experiment) {
         BaselineRequestPreferences preferences = new BaselineRequestPreferences();
@@ -43,14 +31,15 @@ public class BaselineProfilesLoader {
         Collection<BaselineProfile> profiles = new HashSet<>();
 
 //            for (Factor factor : factors.getAllFactors()) {
-                ObjectInputStream<BaselineProfile> stream = getBaselineExpressionsInputStreamFactory().create(experiment, context);
+        ObjectInputStream<BaselineProfile> stream = baselineProfileStreamFactory.create(experiment, context);
 
-                BaselineProfile profile1;
-                while ( (profile1 = stream.readNext()) != null) {
-                    profiles.add(profile1);
-                }
+        BaselineProfile profile1;
+        while ( (profile1 = stream.readNext()) != null) {
+            profiles.add(profile1);
+        }
 
 //            }
         return new BaselineProfilesList(profiles);
     }
+
 }
