@@ -99,62 +99,64 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
         }
 
         for (BaselineProfile profile : profiles) {
-
-            for (Factor factor : profile.getConditions()) {
-
-                BaselineExpression expression = profile.getExpression(factor);
+            for (AssayGroup assayGroup : profile.getConditions()) {
+                BaselineExpression expression = profile.getExpression(assayGroup);
                 if (!expression.isKnown()) {
                     continue;
                 }
-                String frag = HashingIdGenerator.generateHashEncodedID(
-                        experiment.getAccession(),
-                        profile.getId(),
-                        factorToAnalysisUri.get(factor).toString(),
-                        factor.toString(),
-                        String.valueOf(expression.getLevel()));
 
-                URI baselineValueUri = getUriProvider().getExpressionUri(experiment.getAccession(), frag);
-                builder.createTypeInstance(
-                        baselineValueUri,
-                        getUriProvider().getBaselineExpressionValueType()
-                );
-                builder.createLabel(
-                        baselineValueUri,
-                        profile.getName() + " expressed in " + factor.getValue()
-                );
+                for (Factor factor : experiment.getFactors(assayGroup)) {
 
-                builder.createObjectPropertyAssertion(
-                        factorToAnalysisUri.get(factor),
-                        getUriProvider().getAnalysisToExpressionValueRelUri(),
-                        baselineValueUri
-                );
+                    String frag = HashingIdGenerator.generateHashEncodedID(
+                            experiment.getAccession(),
+                            profile.getId(),
+                            factorToAnalysisUri.get(factor).toString(),
+                            factor.toString(),
+                            String.valueOf(expression.getLevel()));
 
-                for (URI geneidUri : getUriProvider().getBioentityUri(profile.getId(), experiment.getSpecies().getName())) {
-
+                    URI baselineValueUri = getUriProvider().getExpressionUri(experiment.getAccession(), frag);
                     builder.createTypeInstance(
-                            geneidUri,
-                            getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")
+                            baselineValueUri,
+                            getUriProvider().getBaselineExpressionValueType()
                     );
-
                     builder.createLabel(
-                            geneidUri,
-                            profile.getName()
-                    );
-
-                    builder.createAnnotationAssertion(
-                            geneidUri,
-                            getUriProvider().getIdentifierRelUri(),
-                            profile.getId()
+                            baselineValueUri,
+                            profile.getName() + " expressed in " + factor.getValue()
                     );
 
                     builder.createObjectPropertyAssertion(
-                            baselineValueUri,
-                            getUriProvider().getDiffValueToProbeElementRel(),
-                            geneidUri
+                            factorToAnalysisUri.get(factor),
+                            getUriProvider().getAnalysisToExpressionValueRelUri(),
+                            baselineValueUri
                     );
-                }
 
-                buildExpressionForFactor(baselineValueUri, expression);
+                    for (URI geneidUri : getUriProvider().getBioentityUri(profile.getId(), experiment.getSpecies().getName())) {
+
+                        builder.createTypeInstance(
+                                geneidUri,
+                                getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")
+                        );
+
+                        builder.createLabel(
+                                geneidUri,
+                                profile.getName()
+                        );
+
+                        builder.createAnnotationAssertion(
+                                geneidUri,
+                                getUriProvider().getIdentifierRelUri(),
+                                profile.getId()
+                        );
+
+                        builder.createObjectPropertyAssertion(
+                                baselineValueUri,
+                                getUriProvider().getDiffValueToProbeElementRel(),
+                                geneidUri
+                        );
+                    }
+
+                    buildExpressionForFactor(baselineValueUri, expression);
+                }
             }
         }
     }
