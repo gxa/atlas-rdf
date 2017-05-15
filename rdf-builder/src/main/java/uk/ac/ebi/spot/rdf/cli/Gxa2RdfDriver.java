@@ -9,6 +9,9 @@ import uk.ac.ebi.spot.rdf.builder.URIProvider;
 import uk.ac.ebi.spot.atlas.model.CompleteExperiment;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -25,7 +28,7 @@ public class Gxa2RdfDriver {
     private static Set<String> experimentAccession = new HashSet<String>();
 
     private static File outputDir;
-    private static File inputDir;
+    private static File inputFile;
 
     private static String format = "TURTLE";
 
@@ -50,34 +53,36 @@ public class Gxa2RdfDriver {
 
                 // find -o option (for asserted output file)
                 if (cl.hasOption("in") ) {
-                    inputDir = new File (cl.getOptionValue("in"));
+                    inputFile = new File (cl.getOptionValue("in"));
 
                 }
                 else {
-                    inputDir = new File(".");
+                    inputFile = new File(".");
                 }
 
-                if (inputDir.exists()) {
+                if (inputFile.exists()) {
 
                     if (cl.hasOption("acc") ) {
                         experimentAccession.add(cl.getOptionValue("acc"));
 
                     }
                     else {
-                        File[] experimentFiles = inputDir.listFiles(new FilenameFilter() {
-                            @Override
-                            public boolean accept(File dir, String name) {
-                                return name.startsWith("E-");
-                            }
-                        });
-                        for (File experimentFile : experimentFiles) {
-                            experimentAccession.add(experimentFile.getName());
-                        }
+                        experimentAccession.addAll(Files.readAllLines(inputFile.toPath(), StandardCharsets.UTF_8));
+
+//                        File[] experimentFiles = inputFile.listFiles(new FilenameFilter() {
+//                            @Override
+//                            public boolean accept(File dir, String name) {
+//                                return name.startsWith("E-");
+//                            }
+//                        });
+//                        for (File experimentFile : experimentFiles) {
+//                            experimentAccession.add(experimentFile.getName());
+//                        }
                     }
 
                 }
                 else {
-                    System.err.println("Can't find input directory " + inputDir.toString());
+                    System.err.println("Can't find input directory " + inputFile.toString());
                     System.exit(1);
                 }
 
@@ -95,7 +100,7 @@ public class Gxa2RdfDriver {
 
             }
         }
-        catch (ParseException e) {
+        catch (ParseException | IOException e) {
             System.err.println("Failed to read supplied arguments");
             help.printHelp("publish", options, true);
             parseArgs += 4;
@@ -123,7 +128,7 @@ public class Gxa2RdfDriver {
         options.addOption(outputFileOption);
 
         Option inputFileOption = new Option("in", "input", true,
-                "Input file containing list of accessions to parse");
+                "Input file containing list of accessions to parse, one per line");
         inputFileOption.setArgName("file");
         inputFileOption.setRequired(false);
         options.addOption(inputFileOption);
@@ -145,7 +150,7 @@ public class Gxa2RdfDriver {
 
         if (parseArgs == 0) {
 
-            System.setProperty("data.files.location", inputDir.getAbsolutePath());
+            System.setProperty("data.files.location", inputFile.getAbsolutePath());
 
             ApplicationContext context = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
 
