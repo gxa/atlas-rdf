@@ -30,6 +30,7 @@
 
     <dependencies>
 
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -47,6 +48,7 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+
     </dependencies>
 
     <repositories>
@@ -85,12 +87,18 @@
                <activeByDefault>true</activeByDefault>
            </activation>
             <properties>
-                <data.files.location>/Users/amunoz/ATLAS3.TEST/integration-test-data/magetab</data.files.location>
                 <java.location>java</java.location>
                 <java.args>-Xmx1000M</java.args>
+
                 <ui.sparql.endpoint>rdf-hx-01.ebi.ac.uk</ui.sparql.endpoint>
                 <ui.sparql.endpoint.port>1119</ui.sparql.endpoint.port>
                 <ui.sparql.endpoint.max>-1</ui.sparql.endpoint.max>
+
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</jdbc.url>
+                <jdbc.username>atlas3dev</jdbc.username>
+                <jdbc.password>atlas3dev</jdbc.password>
+                <solr.host>lime</solr.host>
             </properties>
        </profile>
 
@@ -100,9 +108,14 @@
                <activeByDefault>false</activeByDefault>
            </activation>
             <properties>
-                <data.files.location>/nfs/public/ro/fg/atlas/experiments</data.files.location>
                 <java.location>/ebi/research/software/Linux_x86_64/opt/java/jdk1.7/bin/java</java.location>
                 <java.args>-Xmx16000M -XX:+UseConcMarkSweepGC -Dhttp.proxyHost=wwwcache.ebi.ac.uk -Dhttp.proxyPort=3128 -Dhttp.nonProxyHosts=*.ebi.ac.uk -DproxySet=true</java.args>
+
+                <data.files.location>/nfs/public/ro/fg/atlas/experiments</data.files.location>
+                <jdbc.url>jdbc:oracle:thin:@ora-vm-064.ebi.ac.uk:1531:ATLASPRO</jdbc.url>
+                <jdbc.username>atlasprd3</jdbc.username>
+                <jdbc.password>atlasp543</jdbc.password>
+                <solr.host>ves-hx-69</solr.host>
             </properties>
        </profile>
 
