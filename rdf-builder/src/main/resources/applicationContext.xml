@@ -27,15 +27,4 @@
         <constructor-arg name="propertyReader"  ref="cli.propertyReader"/>
     </bean>
 
-    <bean id="experimentBuilder" class="uk.ac.ebi.spot.atlas.rdf.ExperimentDTO">
-        <property name="baselineProfilesLoader" ref="baselineProfilesLoader"/>
-        <property name="microarrayExperimentCache" ref="microarrayExperimentsCache"/>
-        <property name="rnaReqDiffExperimentsCache" ref="rnaSeqDiffExperimentsCache"/>
-        <property name="trader" ref="configurationTrader"/>
-        <property name="baselineExperimentsCache" ref="baselineExperimentsCache"/>
-        <property name="microarrayProfilesLoader" ref="microarrayProfilesLoader"/>
-        <property name="rnaSeqDiffProfilesLoader" ref="rnaSeqDiffProfilesLoader"/>
-    </bean>
-
-
 </beans>
