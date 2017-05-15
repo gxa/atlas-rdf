@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.rdf.builder;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.spot.rdf.utils.HashingIdGenerator;
 
 import java.net.URI;
@@ -52,7 +52,7 @@ public abstract class DifferentialExperimentDesignRDFBuilder<T extends Different
         }
         else  {
             type = URI.create("http://rdf.ebi.ac.uk/terms/expressionatlas/Analysis");
-            log.warn("No analysis type for differential experiment " + experiment.getAssayAccessions());
+            log.warn("No analysis type for differential experiment " + experiment.getAccession());
         }
 
         builder.createTypeInstance(

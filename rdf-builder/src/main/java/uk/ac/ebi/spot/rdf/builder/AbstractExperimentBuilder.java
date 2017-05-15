@@ -3,13 +3,13 @@ package uk.ac.ebi.spot.rdf.builder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.spot.rdf.exception.UnknownOrganismTypeException;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.io.OutputStream;
 import java.net.URI;
@@ -166,7 +166,7 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
 
             try {
                 URI speciesUri = null;
-                speciesUri = getUriProvider().getOrganismUri(experiment.getSpecies().originalName);
+                speciesUri = getUriProvider().getOrganismUri(experiment.getSpecies().getName());
                 builder.createObjectPropertyAssertion(
                         experimentUri,
                         getUriProvider().getTaxonRelUri(),
@@ -175,9 +175,9 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
                         speciesUri,
                         getUriProvider().getOrganismTypeUri()
                 );
-                builder.createLabel(speciesUri, experiment.getSpecies().originalName);
+                builder.createLabel(speciesUri, experiment.getSpecies().getName());
             } catch (UnknownOrganismTypeException e) {
-                log.error("Unknown organism in " + experiment.getAccession() + " " + experiment.getSpecies().originalName);
+                log.error("Unknown organism in " + experiment.getAccession() + " " + experiment.getSpecies().getName());
             }
 
         }

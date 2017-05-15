@@ -2,11 +2,11 @@ package uk.ac.ebi.spot.rdf.builder;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.spot.rdf.utils.HashingIdGenerator;
 
 import java.net.URI;
@@ -117,7 +117,7 @@ public class MicroarrayContrastRDFBuilder extends DifferentialExperimentDesignRD
                 );
 
                 // add the link to gene
-                for (URI geneidUri : getUriProvider().getBioentityUri(geneId, experiment.getSpecies().originalName)) {
+                for (URI geneidUri : getUriProvider().getBioentityUri(geneId, experiment.getSpecies().getName())) {
                     builder.createTypeInstance(
                             geneidUri,
                             getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")

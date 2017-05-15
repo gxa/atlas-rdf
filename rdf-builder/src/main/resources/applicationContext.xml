@@ -28,7 +28,7 @@
     </bean>
 
     <bean id="experimentBuilder" class="uk.ac.ebi.spot.atlas.rdf.ExperimentDTO">
-        <property name="baselineProfilesLoader"  ref="baselineProfilesLoader"/>
+        <property name="baselineProfilesLoader" ref="baselineProfilesLoader"/>
         <property name="microarrayExperimentCache" ref="microarrayExperimentsCache"/>
         <property name="rnaReqDiffExperimentsCache" ref="rnaSeqDiffExperimentsCache"/>
         <property name="trader" ref="configurationTrader"/>

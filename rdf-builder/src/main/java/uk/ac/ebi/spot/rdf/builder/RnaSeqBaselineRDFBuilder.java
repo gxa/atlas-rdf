@@ -3,7 +3,10 @@ package uk.ac.ebi.spot.rdf.builder;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.spot.rdf.utils.HashingIdGenerator;
 
 import java.net.URI;
@@ -33,20 +36,23 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
 
         // create a map mapping a factor to an assay group
         Map<Factor, Set<AssayGroup>> factorToAssayGroup = new HashMap<>();
-        for (Factor factor : experiment.getExperimentalFactors().getAllFactors()) {
-            Map<String, Factor> groupToFactor = experiment.getExperimentalFactors().getFactorGroupedByAssayGroupId(factor.getType());
+        for (AssayGroup assayGroup : experiment.getDataColumnDescriptors()) {
+            for (Factor factor : experiment.getFactors(assayGroup)) {
+                Map<String, Factor> groupToFactor = experiment.getExperimentalFactors().getFactorGroupedByAssayGroupId(factor.getType());
 
 
-            for (String group : groupToFactor.keySet()) {
-                AssayGroup assayGroup = experiment.getAssayGroups().getAssayGroup(group);
-                if (factor.equals(groupToFactor.get(group))) {
-                    if (!factorToAssayGroup.containsKey(factor)) {
-                        factorToAssayGroup.put(factor, new HashSet<AssayGroup>());
+                for (String group : groupToFactor.keySet()) {
+                    AssayGroup assayGroup = experiment.getAssayGroups().getAssayGroup(group);
+                    if (factor.equals(groupToFactor.get(group))) {
+                        if (!factorToAssayGroup.containsKey(factor)) {
+                            factorToAssayGroup.put(factor, new HashSet<AssayGroup>());
+                        }
+                        factorToAssayGroup.get(factor).add(assayGroup);
                     }
-                    factorToAssayGroup.get(factor).add(assayGroup);
                 }
             }
         }
+
         // for each factor create a URI to represent the analysis of a group of assays
         Map<Factor, URI> factorToAnalysisUri = new HashMap<>();
 
@@ -131,7 +137,7 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
                         baselineValueUri
                 );
 
-                for (URI geneidUri : getUriProvider().getBioentityUri(profile.getId(), experiment.getSpecies().originalName)) {
+                for (URI geneidUri : getUriProvider().getBioentityUri(profile.getId(), experiment.getSpecies().getName())) {
 
                     builder.createTypeInstance(
                             geneidUri,

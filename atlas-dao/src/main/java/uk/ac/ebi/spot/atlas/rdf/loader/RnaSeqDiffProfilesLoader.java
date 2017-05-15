@@ -1,11 +1,12 @@
 package uk.ac.ebi.spot.atlas.rdf.loader;
 
-import uk.ac.ebi.spot.atlas.rdf.commons.ObjectInputStream;
-import uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -26,7 +27,9 @@ public class RnaSeqDiffProfilesLoader {
     }
 
     public DifferentialProfilesList<RnaSeqProfile> load (DifferentialExperiment experiment) {
-        ObjectInputStream<RnaSeqProfile> stream = diffProfileStreamFactory.create(experiment.getAccession(), 0.05d, 1d, Regulation.UP_DOWN);
+        DifferentialRequestPreferences preferences = new DifferentialRequestPreferences();
+
+        ObjectInputStream<RnaSeqProfile> stream = diffProfileStreamFactory.create(experiment, new RnaSeqRequestContext(preferences, experiment));
         Collection<RnaSeqProfile> profiles = new HashSet<RnaSeqProfile>();
         RnaSeqProfile profile1;
         while ( (profile1 = stream.readNext()) != null) {

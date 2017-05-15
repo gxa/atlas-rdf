@@ -1,11 +1,12 @@
 package uk.ac.ebi.spot.atlas.rdf.loader;
 
-import uk.ac.ebi.spot.atlas.rdf.commons.ObjectInputStream;
-import uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray.MicroarrayProfileStreamFactory;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -26,8 +27,15 @@ public class MicroarrayProfilesLoader {
     }
 
     public DifferentialProfilesList<MicroarrayProfile> load (MicroarrayExperiment experiment) {
-        ObjectInputStream<MicroarrayProfile> stream = microarrayProfileStreamFactory.create(experiment.getAccession(), 0.05d, 1d, Regulation.UP_DOWN, experiment.getArrayDesignAccessions());
-        Collection<MicroarrayProfile> profiles = new HashSet<MicroarrayProfile>();
+        MicroarrayRequestPreferences preferences = new MicroarrayRequestPreferences();
+
+        // Default values of preferences:
+        // preferences.setRegulation(Regulation.UP_DOWN);
+        // preferences.setFoldChangeCutoff(1d);
+        // preferences.setCutoff(0.05d);
+
+        ObjectInputStream<MicroarrayProfile> stream = microarrayProfileStreamFactory.create(experiment, new MicroarrayRequestContext(preferences, experiment));
+        Collection<MicroarrayProfile> profiles = new HashSet<>();
         MicroarrayProfile profile1;
         while ( (profile1 = stream.readNext()) != null) {
             profiles.add(profile1);

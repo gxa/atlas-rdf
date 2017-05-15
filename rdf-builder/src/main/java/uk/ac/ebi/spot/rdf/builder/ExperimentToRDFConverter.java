@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.spot.atlas.rdf.ExperimentDTO;
 import uk.ac.ebi.spot.rdf.jena.JenaAssertionBuilder;
 import uk.ac.ebi.atlas.model.CompleteExperiment;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 

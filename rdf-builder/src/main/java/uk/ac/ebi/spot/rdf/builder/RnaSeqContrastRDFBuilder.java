@@ -2,11 +2,11 @@ package uk.ac.ebi.spot.rdf.builder;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.spot.rdf.utils.HashingIdGenerator;
 
 import java.net.URI;
@@ -80,7 +80,7 @@ public class RnaSeqContrastRDFBuilder extends DifferentialExperimentDesignRDFBui
                 );
 
                 // link to ensembl gene
-                for (URI geneidUri : getUriProvider().getBioentityUri(geneId, experiment.getSpecies().originalName)) {
+                for (URI geneidUri : getUriProvider().getBioentityUri(geneId, experiment.getSpecies().getName())) {
                     builder.createTypeInstance(
                             geneidUri,
                             getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")

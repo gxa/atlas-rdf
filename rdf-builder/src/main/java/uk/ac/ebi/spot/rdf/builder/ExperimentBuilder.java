@@ -1,7 +1,7 @@
 package uk.ac.ebi.spot.rdf.builder;
 
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 
 import java.io.OutputStream;
 
