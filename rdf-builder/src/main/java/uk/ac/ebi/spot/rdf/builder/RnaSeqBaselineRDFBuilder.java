@@ -38,6 +38,16 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
         Map<Factor, Set<AssayGroup>> factorToAssayGroup = new HashMap<>();
         for (AssayGroup assayGroup : experiment.getDataColumnDescriptors()) {
             for (Factor factor : experiment.getFactors(assayGroup)) {
+                if (!factorToAssayGroup.containsKey(factor)) {
+                    factorToAssayGroup.put(factor, new HashSet<AssayGroup>());
+                }
+                factorToAssayGroup.get(factor).add(assayGroup);
+            }
+        }
+
+
+
+
                 Map<String, Factor> groupToFactor = experiment.getExperimentalFactors().getFactorGroupedByAssayGroupId(factor.getType());
 
 

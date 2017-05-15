@@ -3,7 +3,7 @@ package uk.ac.ebi.spot.rdf.cli;
 import uk.ac.ebi.spot.atlas.rdf.ExperimentDTO;
 import uk.ac.ebi.spot.rdf.builder.ExperimentToRDFConverter;
 import uk.ac.ebi.spot.rdf.builder.URIProvider;
-import uk.ac.ebi.atlas.model.CompleteExperiment;
+import uk.ac.ebi.spot.atlas.model.CompleteExperiment;
 
 import java.io.File;
 import java.io.FileNotFoundException;

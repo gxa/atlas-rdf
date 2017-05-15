@@ -1,5 +1,6 @@
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.spot.atlas.model;
 
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
 /**
