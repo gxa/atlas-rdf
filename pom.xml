@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>core-model</module>
         <module>rdf-builder</module>
         <module>atlas-dao</module>
         <module>atlas-sparqlapp</module>
