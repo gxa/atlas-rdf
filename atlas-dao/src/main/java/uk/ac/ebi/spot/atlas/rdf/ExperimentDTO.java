@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.model.CompleteExperiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -17,10 +18,13 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.spot.atlas.rdf.loader.BaselineProfilesLoader;
-import uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayProfilesLoader;
-import uk.ac.ebi.spot.atlas.rdf.loader.RnaSeqDiffProfilesLoader;
+import uk.ac.ebi.spot.atlas.rdf.loader.baseline.ProteomicsBaselineProfilesLoader;
+import uk.ac.ebi.spot.atlas.rdf.loader.baseline.RnaSeqBaselineProfilesLoader;
+import uk.ac.ebi.spot.atlas.rdf.loader.differential.MicroarrayProfilesLoader;
+import uk.ac.ebi.spot.atlas.rdf.loader.differential.RnaSeqDiffProfilesLoader;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -28,11 +32,12 @@ import java.util.concurrent.ExecutionException;
  * @date 07/08/2014
  * Samples, Phenotypes and Ontologies Team, EMBL-EBI
  */
+@Named("experimentBuilder")
 public class ExperimentDTO {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private ConfigurationTrader trader;
+    private ConfigurationTrader configurationTrader;
 
     private MicroarrayExperimentsCache microarrayExperimentCache;
     private MicroarrayProfilesLoader microarrayProfilesLoader;
@@ -40,29 +45,53 @@ public class ExperimentDTO {
     private RnaSeqDiffExperimentsCache rnaReqDiffExperimentsCache;
     private RnaSeqDiffProfilesLoader rnaSeqDiffProfilesLoader;
 
-    private RnaSeqBaselineExperimentsCache baselineExperimentsCache;
-    private BaselineProfilesLoader baselineProfilesLoader;
+    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
+    private RnaSeqBaselineProfilesLoader rnaSeqBaselineProfilesLoader;
 
-    public RnaSeqBaselineExperimentsCache getBaselineExperimentsCache() {
-        return baselineExperimentsCache;
+    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
+    private ProteomicsBaselineProfilesLoader proteomicsBaselineProfilesLoader;
+
+    public RnaSeqBaselineExperimentsCache getRnaSeqBaselineExperimentsCache() {
+        return rnaSeqBaselineExperimentsCache;
     }
 
-    public void setBaselineExperimentsCache(RnaSeqBaselineExperimentsCache baselineExperimentsCache) {
-        this.baselineExperimentsCache = baselineExperimentsCache;
+    @Inject
+    public void setRnaSeqBaselineExperimentsCache(RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache) {
+        this.rnaSeqBaselineExperimentsCache = rnaSeqBaselineExperimentsCache;
     }
 
-    public BaselineProfilesLoader getBaselineProfilesLoader() {
-        return baselineProfilesLoader;
+    public RnaSeqBaselineProfilesLoader getRnaSeqBaselineProfilesLoader() {
+        return rnaSeqBaselineProfilesLoader;
     }
 
-    public void setBaselineProfilesLoader(BaselineProfilesLoader baselineProfilesLoader) {
-        this.baselineProfilesLoader = baselineProfilesLoader;
+    @Inject
+    public void setRnaSeqBaselineProfilesLoader(RnaSeqBaselineProfilesLoader rnaSeqBaselineProfilesLoader) {
+        this.rnaSeqBaselineProfilesLoader = rnaSeqBaselineProfilesLoader;
+    }
+
+    public ProteomicsBaselineExperimentsCache getProteomicsBaselineExperimentsCache() {
+        return proteomicsBaselineExperimentsCache;
+    }
+
+    @Inject
+    public void setProteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache) {
+        this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
+    }
+
+    public ProteomicsBaselineProfilesLoader getProteomicsBaselineProfilesLoader() {
+        return proteomicsBaselineProfilesLoader;
+    }
+
+    @Inject
+    public void setProteomicsBaselineProfilesLoader(ProteomicsBaselineProfilesLoader proteomicsBaselineProfilesLoader) {
+        this.proteomicsBaselineProfilesLoader = proteomicsBaselineProfilesLoader;
     }
 
     public RnaSeqDiffExperimentsCache getRnaReqDiffExperimentsCache() {
         return rnaReqDiffExperimentsCache;
     }
 
+    @Inject
     public void setRnaReqDiffExperimentsCache(RnaSeqDiffExperimentsCache rnaReqDiffExperimentsCache) {
         this.rnaReqDiffExperimentsCache = rnaReqDiffExperimentsCache;
     }
@@ -71,6 +100,7 @@ public class ExperimentDTO {
         return rnaSeqDiffProfilesLoader;
     }
 
+    @Inject
     public void setRnaSeqDiffProfilesLoader(RnaSeqDiffProfilesLoader rnaSeqDiffProfilesLoader) {
         this.rnaSeqDiffProfilesLoader = rnaSeqDiffProfilesLoader;
     }
@@ -78,34 +108,39 @@ public class ExperimentDTO {
     public MicroarrayProfilesLoader getMicroarrayProfilesLoader () {
         return microarrayProfilesLoader;
     }
+
+    @Inject
     public void setMicroarrayProfilesLoader (MicroarrayProfilesLoader microarrayProfileLoader) {
         this.microarrayProfilesLoader = microarrayProfileLoader;
     }
 
-    public void setMicroarrayExperimentCache(MicroarrayExperimentsCache microarrayExperimentCache) {
-        this.microarrayExperimentCache = microarrayExperimentCache;
-    }
     public MicroarrayExperimentsCache getMicroarrayExperimentCache() {
         return microarrayExperimentCache;
     }
 
-    public ConfigurationTrader getTrader() {
-        return trader;
+    @Inject
+    public void setMicroarrayExperimentCache(MicroarrayExperimentsCache microarrayExperimentCache) {
+        this.microarrayExperimentCache = microarrayExperimentCache;
     }
 
-    public void setTrader(ConfigurationTrader trader) {
-        this.trader = trader;
+    public ConfigurationTrader getConfigurationTrader() {
+        return configurationTrader;
+    }
+
+    @Inject
+    public void setConfigurationTrader(ConfigurationTrader configurationTrader) {
+        this.configurationTrader = configurationTrader;
     }
 
     public CompleteExperiment build (String experimentAccession) throws ExecutionException {
 
-        ExperimentConfiguration config = getTrader().getExperimentConfiguration(experimentAccession);
+        ExperimentConfiguration config = getConfigurationTrader().getExperimentConfiguration(experimentAccession);
 
         log.info(String.format("Loading %s with accession %s from filesystem", config.getExperimentType().getDescription(), experimentAccession));
         if (config.getExperimentType().isMicroarray()) {
             final MicroarrayExperiment experiment = getMicroarrayExperimentCache().getExperiment(experimentAccession);
             final DifferentialProfilesList<MicroarrayProfile> profiles =  getMicroarrayProfilesLoader().load((MicroarrayExperiment) experiment);
-            getMicroarrayExperimentCache().evictExperiment(experimentAccession);
+//            getMicroarrayExperimentCache().evictExperiment(experimentAccession);
             return new CompleteExperiment<MicroarrayExperiment, DifferentialProfilesList<MicroarrayProfile>>() {
                 @Override
                 public MicroarrayExperiment getExperiment() {
@@ -122,7 +157,7 @@ public class ExperimentDTO {
         else if (config.getExperimentType().isDifferential()) {
             final DifferentialExperiment experiment = getRnaReqDiffExperimentsCache().getExperiment(experimentAccession);
             final DifferentialProfilesList<RnaSeqProfile> profiles =  getRnaSeqDiffProfilesLoader().load(experiment);
-            getRnaReqDiffExperimentsCache().evictExperiment(experimentAccession);
+//            getRnaReqDiffExperimentsCache().evictExperiment(experimentAccession);
 
             return new CompleteExperiment<DifferentialExperiment, DifferentialProfilesList<RnaSeqProfile>>() {
                 @Override
@@ -136,10 +171,26 @@ public class ExperimentDTO {
                 }
             };
         }
-        else if (config.getExperimentType().isBaseline()) {
-            final BaselineExperiment experiment = getBaselineExperimentsCache().getExperiment(experimentAccession);
-            final BaselineProfilesList profiles = getBaselineProfilesLoader().load(experiment);
-            getBaselineExperimentsCache().evictExperiment(experimentAccession);
+        else if (config.getExperimentType().isRnaSeqBaseline()) {
+            final BaselineExperiment experiment = getRnaSeqBaselineExperimentsCache().getExperiment(experimentAccession);
+            final BaselineProfilesList profiles = getRnaSeqBaselineProfilesLoader().load(experiment);
+//            getRnaSeqBaselineExperimentsCache().evictExperiment(experimentAccession);
+
+            return new CompleteExperiment<BaselineExperiment, BaselineProfilesList>() {
+                @Override
+                public BaselineExperiment getExperiment() {
+                    return experiment;
+                }
+
+                @Override
+                public BaselineProfilesList getGeneProfilesList() {
+                    return profiles;
+                }
+            };
+        } else if (config.getExperimentType().isProteomicsBaseline()) {
+            final BaselineExperiment experiment = getProteomicsBaselineExperimentsCache().getExperiment(experimentAccession);
+            final BaselineProfilesList profiles = getProteomicsBaselineProfilesLoader().load(experiment);
+//            getProteomicsBaselineExperimentsCache().evictExperiment(experimentAccession);
 
             return new CompleteExperiment<BaselineExperiment, BaselineProfilesList>() {
                 @Override
@@ -286,18 +337,18 @@ public class ExperimentDTO {
         RnaSeqDiffExperimentsCache rnaReqDiffexperimentsCache = (RnaSeqDiffExperimentsCache) context.getBean("rnaSeqDiffExperimentsCache");
         RnaSeqDiffProfilesLoader rnadiffprofile = (RnaSeqDiffProfilesLoader) context.getBean("rnaSeqDiffProfilesLoader");
 
-        RnaSeqBaselineExperimentsCache baselineExperimentsCache = (RnaSeqBaselineExperimentsCache) context.getBean("baselineExperimentsCache");
-        BaselineProfilesLoader baselineProfilesLoader= (BaselineProfilesLoader) context.getBean("baselineProfilesLoader");
+        RnaSeqBaselineExperimentsCache baselineExperimentsCache = (RnaSeqBaselineExperimentsCache) context.getBean("rnaSeqBaselineExperimentsCache");
+        RnaSeqBaselineProfilesLoader baselineProfilesLoader= (RnaSeqBaselineProfilesLoader) context.getBean("rnaSeqBaselineProfilesLoader");
 
         ExperimentDTO dto = new ExperimentDTO();
-        dto.setTrader(trader);
+        dto.setConfigurationTrader(trader);
 
         dto.setMicroarrayExperimentCache(experimentsCache);
         dto.setMicroarrayProfilesLoader(maprofile);
         dto.setRnaReqDiffExperimentsCache(rnaReqDiffexperimentsCache);
         dto.setRnaSeqDiffProfilesLoader(rnadiffprofile);
-        dto.setBaselineExperimentsCache(baselineExperimentsCache);
-        dto.setBaselineProfilesLoader(baselineProfilesLoader);
+        dto.setRnaSeqBaselineExperimentsCache(baselineExperimentsCache);
+        dto.setRnaSeqBaselineProfilesLoader(baselineProfilesLoader);
 
 
 //        dto.setLimpopoUtils(utils);
