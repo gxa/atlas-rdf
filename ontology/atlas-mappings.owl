@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY swo "http://www.ebi.ac.uk/swo/" >
+    <!ENTITY efo "http://www.ebi.ac.uk/efo/" >
+    <!ENTITY terms2 "http://purl.org/dc/terms/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY obo "http://purl.obolibrary.org/obo/" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY atlas "http://rdf.ebi.ac.uk/terms/atlas/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY resource "http://semanticscience.org/resource/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY expressionatlas "http://rdf.ebi.ac.uk/terms/expressionatlas/" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://rdf.ebi.ac.uk/terms/atlas-mapping/"
+     xml:base="http://rdf.ebi.ac.uk/terms/atlas-mapping/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:expressionatlas="http://rdf.ebi.ac.uk/terms/expressionatlas/"
+     xmlns:swo="http://www.ebi.ac.uk/swo/"
+     xmlns:efo="http://www.ebi.ac.uk/efo/"
+     xmlns:resource="http://semanticscience.org/resource/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:obo="http://purl.obolibrary.org/obo/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms2="http://purl.org/dc/terms/"
+     xmlns:atlas="http://rdf.ebi.ac.uk/terms/atlas/">
+    <owl:Ontology rdf:about="http://rdf.ebi.ac.uk/terms/atlas-mapping">
+        <rdfs:label>Gene Expression Atlas vocabulary mapping file</rdfs:label>
+        <owl:versionIRI rdf:resource="http://rdf.ebi.ac.uk/terms/v1.0/atlas-mapping"/>
+        <owl:imports rdf:resource="http://rdf.ebi.ac.uk/terms/v2.0/expressionatlas"/>
+        <owl:imports rdf:resource="http://semanticscience.org/ontology/sio.owl"/>
+        <owl:imports rdf:resource="http://www.ebi.ac.uk/efo/"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000115 -->
+
+    <owl:AnnotationProperty rdf:about="&obo;IAO_0000115">
+        <rdfs:subPropertyOf rdf:resource="&dc;description"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/description -->
+
+    <owl:AnnotationProperty rdf:about="&dc;description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="&terms2;description">
+        <rdfs:subPropertyOf rdf:resource="&dc;description"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/dbXref -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;dbXref">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000425"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAnalysis -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;hasAnalysis">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000053"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAssay -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;hasAssay">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000053"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAssociatedArrayDesign -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;hasAssociatedArrayDesign">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000425"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasExpressionValue -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;hasExpressionValue">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000312"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasFactorValue -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;hasFactorValue">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000008"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasSample -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;hasSample">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000230"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasSampleCharacteristic -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;hasSampleCharacteristic">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000223"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/implementedBy -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;implementedBy">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000139"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/isIdentifierFor -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;isIdentifierFor">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000672"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/isMeasurementOf -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;isMeasurementOf">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000215"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/pValue -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;pValue">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000300"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/tStatistic -->
+
+    <owl:AnnotationProperty rdf:about="&expressionatlas;tStatistic">
+        <rdfs:subPropertyOf rdf:resource="&resource;SIO_000300"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000008 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000008"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000053 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000053"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000139 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000139"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000215 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000215"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000223 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000223"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000230 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000230"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000300 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000300"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000312 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000312"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000425 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000425"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000672 -->
+
+    <owl:AnnotationProperty rdf:about="&resource;SIO_000672"/>
+    
+
+
+    <!-- http://www.ebi.ac.uk/efo/definition -->
+
+    <owl:AnnotationProperty rdf:about="&efo;definition">
+        <rdfs:subPropertyOf rdf:resource="&dc;description"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Assay -->
+
+    <rdf:Description rdf:about="&expressionatlas;Assay">
+        <rdfs:subClassOf rdf:resource="&resource;SIO_001007"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DatabaseReference -->
+
+    <rdf:Description rdf:about="&expressionatlas;DatabaseReference">
+        <rdfs:subClassOf rdf:resource="&resource;SIO_000731"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DesignPlatform -->
+
+    <rdf:Description rdf:about="&expressionatlas;DesignPlatform">
+        <rdfs:subClassOf rdf:resource="&efo;EFO_0001451"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DifferentialExpressionAnalysis -->
+
+    <rdf:Description rdf:about="&expressionatlas;DifferentialExpressionAnalysis">
+        <rdfs:subClassOf rdf:resource="&obo;OBI_0000650"/>
+        <rdfs:subClassOf rdf:resource="&resource;SIO_000594"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DifferentialExpressionRatio -->
+
+    <rdf:Description rdf:about="&expressionatlas;DifferentialExpressionRatio">
+        <rdfs:subClassOf rdf:resource="&resource;SIO_001078"/>
+        <rdfs:subClassOf rdf:resource="&efo;EFO_0004034"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Experiment -->
+
+    <rdf:Description rdf:about="&expressionatlas;Experiment">
+        <rdfs:subClassOf rdf:resource="&resource;SIO_000994"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/ExperimentalFactor -->
+
+    <rdf:Description rdf:about="&expressionatlas;ExperimentalFactor">
+        <rdfs:subClassOf rdf:resource="&resource;SIO_000367"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Gene -->
+
+    <rdf:Description rdf:about="&expressionatlas;Gene">
+        <rdfs:subClassOf rdf:resource="&resource;SIO_010035"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/ProbeDesignElement -->
+
+    <rdf:Description rdf:about="&expressionatlas;ProbeDesignElement">
+        <rdfs:subClassOf rdf:resource="&efo;EFO_0004903"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Sample -->
+
+    <rdf:Description rdf:about="&expressionatlas;Sample">
+        <rdfs:subClassOf rdf:resource="&obo;OBI_0100051"/>
+        <rdfs:subClassOf rdf:resource="&resource;SIO_010412"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000097 -->
+
+    <owl:Class rdf:about="&resource;SIO_000097"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000367 -->
+
+    <owl:Class rdf:about="&resource;SIO_000367"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000594 -->
+
+    <owl:Class rdf:about="&resource;SIO_000594"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000731 -->
+
+    <owl:Class rdf:about="&resource;SIO_000731"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_000994 -->
+
+    <owl:Class rdf:about="&resource;SIO_000994"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_001007 -->
+
+    <owl:Class rdf:about="&resource;SIO_001007"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_001078 -->
+
+    <owl:Class rdf:about="&resource;SIO_001078"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_010035 -->
+
+    <owl:Class rdf:about="&resource;SIO_010035"/>
+    
+
+
+    <!-- http://semanticscience.org/resource/SIO_010412 -->
+
+    <owl:Class rdf:about="&resource;SIO_010412"/>
+    
+
+
+    <!-- http://www.ebi.ac.uk/swo/SWO_0000090 -->
+
+    <rdf:Description rdf:about="&swo;SWO_0000090">
+        <rdfs:subClassOf rdf:resource="&resource;SIO_000097"/>
+        <rdfs:subClassOf rdf:resource="&efo;EFO_0002029"/>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&atlas;UniprotDatabaseReference">
+        <resource:equivalentTo rdf:resource="http://purl.uniprot.org/core/Protein"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="&obo;OBI_0100026">
+        <resource:equivalentTo rdf:resource="&resource;SIO_010000"/>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
